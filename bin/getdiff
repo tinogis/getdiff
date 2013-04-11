@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ $# -lt 2 ]; then
+    echo "Parameters needed:"
+    echo "  $0 -u username diff_url"
+    echo 'Obs: All parameters except lastone are passed to curl "as is"'
+    exit;
+fi
+url=$1
+header="Accept: application/vnd.github.1.diff"
+
+curl_param=`echo $* | sed -s 's#https://github.com#https://api.github.com/repos#g' | sed -s 's#\(https://.*\)pull#\1pulls#g'`
+
+curl -H "$header" $curl_param
